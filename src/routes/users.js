@@ -7,7 +7,7 @@ router.get('/signin',(req,res,next)=>{
 	res.render('signin');
 });
 router.post('/signin',passport.authenticate('local-signin',{
-	succesRedirect: '/profile',
+	successRedirect: '/profile',
 	failureRedirect: '/signin',
 	failureFlash: true
 }));
@@ -42,6 +42,10 @@ router.post('/signup',async(req,res,next)=>{
 			res.redirect('/signin');
 		}
 	}
+});
+router.get('/logout',(req,res,next)=>{
+	req.logout();
+	res.redirect('/');
 });
 
 module.exports=router;

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<div class="container p-4">
+			<div class="row">
+				<div class="col-md-4 offset-md-4">
+					<div class="card">
+						<div class="card-header text-center">
+							<h3>Edita Tu Perfil</h3>
+						</div>
+						<div class="card-body">
+							<form action="/edit/{{dimages._id}}?_method=PUT"method="POST"enctype="multipart/form-data">
+								<input type="hidden" name="_method" value="PUT">
+								<div class="input-group mb-3">
+									<div class="custom-file">
+										<input type="file" name="image" class="custom-file-input" id="inputGroupFile02">
+                                    <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Subir Imagen</label>
+									</div>
+								</div>
+								<div class="form-group">
+									<span id="errorB"></span>
+									<input type="text" name="title"id="titulo"placeholder="Titlulo" class="form-control"value="{{dimages.title}}">
+								</div>
+								<div class="form-group">
+									<span id="errorC"></span>
+									<textarea name="description"id="descripcion"placeholder="Descripcion" class="form-control">{{dimages.description}}</textarea>
+								</div>
+								<div class="form-group">
+                                                                        <label>Nombre</label>
+									<input type="text"name="name"placeholder="Su nombre"class="form-control"value="{{dimages.name}}">
+								</div>
+								<div class="form-group">
+									<label>Edad</label>
+									<input type="number"name="year"placeholder="Su Edad"class="form-control"value="{{dimages.year}}">
+                                                                </div>
+								<div class="form-group">
+									<label>Religion</label>
+									<input type="text"name="religion"placeholder="Su Religion" class="form-control"value="{{dimages.religion}}">
+                                                                </div>
+								 <div class="form-group">
+									 <label>Persona Favorita</label>
+									 <input type="text"name="favorite"placeholder="Su Persona Favorita"class="form-control"value="{{dimages.favorite}}">
+                                                                </div>
+								<div class="form-group">
+                                                                        <label>Descripcion suya</label>
+									<textarea name="descript"placeholder="Como Se Describe"class="form-control">{{dimages.descript}}</textarea>
+                                                                </div>
+								<div class="form-group">
+									<button class="btn btn-success btn-block"id="subir">
+										Editar
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+</div>

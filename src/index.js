@@ -12,7 +12,7 @@ const passport=require('passport');
 const {format}=require('timeago.js');
 const app=express();
 
-mongoose.connect('mongodb+srv://eliotalderson_01:3219329910@databasered-6xixf.mongodb.net/test?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://braian:3219329910@databasemyfriends-afu6k.mongodb.net/test?retryWrites=true&w=majority')
 	.then(db => console.log('conectado a la base de datos'))
 	.catch(err => console.log(err));
 
@@ -29,7 +29,18 @@ app.engine('.hbs', exphbs({
 app.set('view engine','.hbs');
 
 app.use(morgan('dev'));
+//para enviar metodos aparte del get y el post como el put y el delete
+app.use(methodOverride('_method'));
 app.use(express.urlencoded({extended: false}));
+const storage = multer.diskStorage({
+        destination: path.join(__dirname,'/public/img/uploads/'),
+        filename: (req,file,cb,filename) => {
+                cb(null,uuid()+path.extname(file.originalname));
+        }
+});
+app.use(multer({
+        storage
+}).single('image'));
 app.use(session({
 	secret: uuid(),
 	resave: true,	
@@ -42,17 +53,10 @@ app.use((req,res,next)=>{
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg = req.flash('error_msg');
 	res.locals.error = req.flash('error');
+	//cuando un usuario se autentica passport guarda su informacion en un objeto request
+	res.locals.user = req.user || null;
 	next();
 });
-const storage = multer.diskStorage({
-	destination: path.join(__dirname,'/public/img/uploads/'),
-	filename: (req,file,cb,filename) => {
-		cb(null,uuid()+path.extname(file.originalname));
-	}
-});
-app.use(multer({
-	storage
-}).single('image'));
 
 app.use(require('./routes/index'));
 app.use(require('./routes/app'));
