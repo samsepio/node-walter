@@ -1,6 +1,7 @@
 const express=require('express');
 const Image=require('../model/database2');
 const Comentary=require('../model/database3');
+const Upload=require('../model/database4');
 const router=express.Router();
 const {isAuthenticated} = require('../helpers/auth');
 
@@ -43,6 +44,35 @@ router.post('/profile',async(req,res,next)=>{
 		res.redirect('/profiles');
 	}
 });
+router.get('/newphotho',isAuthenticated,(req,res,next)=>{
+	res.render('newphotho');
+});
+router.post('/newphotho',async(req,res,next)=>{
+	const {title,description} = req.body;
+	const errors=[];
+	if(title.length <= 0 || description.length <= 0 ){
+		errors.push({text: 'todos los campos son hobligatorios'});
+	}
+	if(errors.length > 0){
+		res.render('newphotho',{title,description,errors});
+	}else{
+		const upload = new Upload();
+		upload.title = req.body.title;
+		upload.description = req.body.description;
+		upload.originalname = req.file.originalname;
+                upload.mimetype = req.file.mimetype;
+                upload.fieldname = req.file.fieldname;
+                upload.fieldname = req.file.fieldname;
+                upload.size = req.file.size;
+                upload.encoding = req.file.encoding;
+                upload.filename = req.file.filename;
+                upload.path = '/img/uploads/'+ req.file.filename;
+                upload.user = req.user.id;
+                await upload.save();
+                console.log(upload);
+                res.redirect('/myperfil');
+	}
+});
 router.post('/comentary/:images_id',async(req,res,next)=>{
 	const image = await Image.findById(req.params.images_id);
 	if(image){
@@ -79,7 +109,8 @@ router.delete('/delete/:id',isAuthenticated,async(req,res,next)=>{
 });
 router.get('/myperfil',isAuthenticated,async(req,res,next)=>{
 	const profile = await Image.find({user: req.user.id});
-	res.render('myperfil',{profile});
+	const uploads = await Upload.find({user: req.user.id});
+	res.render('myperfil',{profile,uploads});
 });
 router.get('/img/:id',isAuthenticated,async(req,res,next)=>{
 	const {id} = req.params;

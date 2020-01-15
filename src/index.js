@@ -12,7 +12,7 @@ const passport=require('passport');
 const {format}=require('timeago.js');
 const app=express();
 
-mongoose.connect('mongodb+srv://braian:3219329910@databasemyfriends-afu6k.mongodb.net/test?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://eliotalderson_01:3219329910@databasered-6xixf.mongodb.net/test?retryWrites=true&w=majority')
 	.then(db => console.log('conectado a la base de datos'))
 	.catch(err => console.log(err));
 
