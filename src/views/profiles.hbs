@@ -8,10 +8,11 @@
 						<div class="card-body">
 							<h5 class="card-subtitle">{{title}}</h5>
 							<p class="card-text">{{description}}</p>
-							<i class="fas fa-clock"></i>
+							imagen subida el <i class="fas fa-clock"></i>{{created_at}}
 							</p>
-							<a class="btn btn-block btn-dark"href="/like/{{id}}">
-								<i class="fas fa-thumbs-up"></i>Me Gusta
+							<span class="likes-count"id="likes">{{#if status}}</span>
+							<a class="btn"href="/like/{{id}}">
+								<i class="fas fa-heart"></i>
 							</a>
 							<a class="btn btn-warning btn-block"href="/img/{{id}}">
 								<i class="fas fa-question-circle"></i>Ver Mas

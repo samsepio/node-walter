@@ -57,6 +57,10 @@ app.use((req,res,next)=>{
 	res.locals.user = req.user || null;
 	next();
 });
+app.use((req,res,next)=>{
+	app.locals.format = format;
+	next();
+});
 
 app.use(require('./routes/index'));
 app.use(require('./routes/app'));

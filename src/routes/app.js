@@ -73,6 +73,17 @@ router.post('/newphotho',async(req,res,next)=>{
                 res.redirect('/myperfil');
 	}
 });
+router.post('/chat/:chat_id',async(req,res,next)=>{
+	const image = await Image.findById(req.params.chat_id);
+	if(image){
+		const chat = new Chat(req.body);
+		chat.image_id = image._id;
+		await chat.save();
+		res.redirect('/img/'+chat.image_id);
+	}else{
+		res.send('este usuario ya no existe');
+	}
+});
 router.post('/comentary/:images_id',async(req,res,next)=>{
 	const image = await Image.findById(req.params.images_id);
 	if(image){
@@ -102,6 +113,12 @@ router.get('/edit/:id',isAuthenticated,async(req,res,next)=>{
 		res.render('edit',{dimages});
 	}
 });
+router.delete('/remove/:id',isAuthenticated,async(req,res,next)=>{
+	const {id} = req.params;
+	await Upload.findByIdAndDelete(id);
+	req.flash('success_msg','imagen eliminada correctamente');
+	res.redirect('/myperfil');
+});
 router.delete('/delete/:id',isAuthenticated,async(req,res,next)=>{
 	const {id} = req.params;
 	await Image.findByIdAndDelete(id);
@@ -111,6 +128,13 @@ router.get('/myperfil',isAuthenticated,async(req,res,next)=>{
 	const profile = await Image.find({user: req.user.id});
 	const uploads = await Upload.find({user: req.user.id});
 	res.render('myperfil',{profile,uploads});
+});
+router.get('/like/:id',isAuthenticated,async(req,res,next)=>{
+	const {id} = req.params;
+	const limage = await Image.findById(id);
+	limage.status = !limage.status;
+	await limage.save();
+	res.redirect('/profiles');
 });
 router.get('/img/:id',isAuthenticated,async(req,res,next)=>{
 	const {id} = req.params;

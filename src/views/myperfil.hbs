@@ -19,6 +19,7 @@
           <button type="submit" class="btn btn-danger btn-block">ELiminar</button>
 	 </form>
 	 <br><a class="btn btn-primary btn-block"href="/edit/{{id}}">Editar Perfil</a>
+	 <a class="btn btn-info btn-block"href="/newphotho">Subir Otra Foto</a>
       </div>
     </div>
   </div>
@@ -32,8 +33,11 @@
     <div class="row">
       {{#each uploads}}
       <div class="col-md-4 text-center">
-          <img src="/img/uploads/{{filename}}"alt="{{title}}"class="w-100 h-100 img-thumbnail">
-        </a>
+          <img src="/img/uploads/{{filename}}"alt="{{title}}"class="w-90 h-90 img-thumbnail">
+	  <form action="/remove/{{_id}}?_method=DELETE" method="POST">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit" class="btn btn-danger btn-block">ELiminar</button>
+         </form>
       </div>
       {{/each}}
     </div>
