@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{{#each image}}
+<div class="row p-4">
+  <div class="col-md-4 mx-auto">
+    <div class="card mx-auto">
+      <h3 class="card-header text-withe">
+	      Nueva Publicacion {{image.name}}
+      </h3>
+      <div class="card-body">
+	      <form action="/publication/{{uniqueId}}"method="POST">
+          <div class="form-group">
+            <input type="text"class="form-control"name="title"placeholder="Ingrese El Titulo">
+          </div>
+          <div class="form-group">
+		  <textarea class="form-control"name="publication"placeholder="Publicacion"></textarea>
+          </div>
+          <button class="btn btn-primary btn-block">
+            Publicar
+          </button>
+        </form>
+      </div>
+    </div>
+{{/each}}

@@ -2,6 +2,7 @@ const express=require('express');
 const Image=require('../model/database2');
 const Comentary=require('../model/database3');
 const Upload=require('../model/database4');
+const Public=require('../model/database5');
 const router=express.Router();
 const {isAuthenticated} = require('../helpers/auth');
 
@@ -73,16 +74,9 @@ router.post('/newphotho',async(req,res,next)=>{
                 res.redirect('/myperfil');
 	}
 });
-router.post('/chat/:chat_id',async(req,res,next)=>{
-	const image = await Image.findById(req.params.chat_id);
-	if(image){
-		const chat = new Chat(req.body);
-		chat.image_id = image._id;
-		await chat.save();
-		res.redirect('/img/'+chat.image_id);
-	}else{
-		res.send('este usuario ya no existe');
-	}
+router.get('/newpublic',isAuthenticated,async(req,res,next)=>{
+	const image = await Image.find({user: req.user.id});
+	res.render('publication',{image});
 });
 router.post('/comentary/:images_id',async(req,res,next)=>{
 	const image = await Image.findById(req.params.images_id);
@@ -127,7 +121,9 @@ router.delete('/delete/:id',isAuthenticated,async(req,res,next)=>{
 router.get('/myperfil',isAuthenticated,async(req,res,next)=>{
 	const profile = await Image.find({user: req.user.id});
 	const uploads = await Upload.find({user: req.user.id});
-	res.render('myperfil',{profile,uploads});
+	const upload = await Upload.countDocuments({user: req.user.id});
+	console.log(upload);
+	res.render('myperfil',{profile,uploads,upload});
 });
 router.get('/like/:id',isAuthenticated,async(req,res,next)=>{
 	const {id} = req.params;
@@ -139,6 +135,8 @@ router.get('/like/:id',isAuthenticated,async(req,res,next)=>{
 router.get('/img/:id',isAuthenticated,async(req,res,next)=>{
 	const {id} = req.params;
 	const image = await Image.findById(id);
+	image.views = image.views + 1;
+	await image.save();
 	const comentary = await Comentary.find({image_id: id});
 	res.render('photho',{image,comentary});
 });

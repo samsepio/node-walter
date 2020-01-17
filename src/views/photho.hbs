@@ -29,7 +29,8 @@
 	<p class="card-text">Persona Favorita: {{image.favorite}}</p>
 	<p class="card-text">Edad: {{image.year}}</p>
 	<p class="card-text">El Se Describe: {{image.descript}}</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+	<i class="fa fa-eye"></i>{{image.views}}
+	<p class="card-text"><small class="text-muted">{{image.created_at}}</small></p>
 	{{#each comentary}}
 	  <ul class="list-group p-4"style="max-width: 440px;">
 		  <li class="list-group-item">{{comentary}}

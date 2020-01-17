@@ -16,6 +16,7 @@ const imageSchema = new Schema({
 	size:{type: Number},
 	fieldname:{type: String},
 	encoding:{type: String},
+	views:{type: Number, default: 0},
 	status:{
 		default:false,
 		type:Boolean

@@ -1,9 +1,18 @@
 <!DOCTYPE html>
-<div class="card mb-3i mx-auto"style="max-width: 540px;">
+<div class="card mb-3i mx-auto"style="max-width: 800px;">
   {{#each profile}}
   <div class="row no-gutters mx-auto">
     <div class="col-md-4 mx-auto">
-            <img src="{{path}}"class="card-img"alt="{{filename}}">
+	    <img src="{{path}}"class="card-img"alt="{{filename}}">
+	    <br><br><a class="btn btn-success btn-block"href="/newpublic">
+		    <i class="fa fa-user-friends"></i>Crear Publicacion
+	    </a>
+	    <a class="btn btn-primary btn-block"href="/edit/{{id}}">
+		    <i class="far fa-images"></i>Editar Perfil
+	    </a>
+	    <a class="btn btn-info btn-block"href="/newphotho">
+		    <i class="fa fa-upload"></i>Subir otra Foto
+	    </a>
     </div>
     <div class="col-md-8 mx-auto">
       <div class="card-body mx-auto">
@@ -13,33 +22,38 @@
         <p class="card-text">Tu Persona Favorita: {{favorite}}</p>
         <p class="card-text">Tu Edad: {{year}}</p>
         <p class="card-text">Tu Te Describes: {{descript}}</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-	 <form action="/delete/{{_id}}?_method=DELETE" method="POST">
-          <input type="hidden" name="_method" value="DELETE">
-          <button type="submit" class="btn btn-danger btn-block">ELiminar</button>
-	 </form>
-	 <br><a class="btn btn-primary btn-block"href="/edit/{{id}}">Editar Perfil</a>
-	 <a class="btn btn-info btn-block"href="/newphotho">Subir Otra Foto</a>
+	<p class="card-text"><small class="text-muted">{{created_at}}</small></p>
       </div>
     </div>
-  </div>
   {{/each}}
-</div>
 <div class="card mt-2">
   <div class="card-header bg-dark text-white">
     <h3><i class="far fa-images"></i>Tus Imagenes</h3>
   </div>
   <div class="card-body">
-    <div class="row">
+    <div class="row ">
       {{#each uploads}}
       <div class="col-md-4 text-center">
-          <img src="/img/uploads/{{filename}}"alt="{{title}}"class="w-90 h-90 img-thumbnail">
+          <img src="/img/uploads/{{filename}}"alt="{{title}}"class="w-60 h-60 img-thumbnail">
 	  <form action="/remove/{{_id}}?_method=DELETE" method="POST">
           <input type="hidden" name="_method" value="DELETE">
-          <button type="submit" class="btn btn-danger btn-block">ELiminar</button>
+          <button type="submit" class="btn btn-danger btn-block">
+		  <i class="fa fa-times"></i>Eliminar
+	  </button>
          </form>
       </div>
       {{/each}}
     </div>
   </div>
+</div>
+<div class="card mt-2">
+  <div class="card-header bg-dark text-white">
+	  <h4>Estado Del Perfil</h4>
+  </div>
+  {{#if upload}}
+  <div class="card-body">
+    <p><i class="fas fa-images"></i> Imagenes Subidas: {{upload}}</p>
+    <p><i class="fas fa-comments"></i>Comentarios: </p>
+  </div>
+  {{/if}}
 </div>
