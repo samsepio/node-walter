@@ -26,7 +26,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "express-handlebars": "^3.1.0",
+    "express-handlebars": "^5.3.1",
     "nodemon": "^2.0.2"
   }
 }
